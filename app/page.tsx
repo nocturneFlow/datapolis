@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, ReactNode } from "react";
+import ThreeBackground from "@/components/ThreeBackground";
 
 const FadeInSection = ({
   children,
@@ -15,52 +15,72 @@ const FadeInSection = ({
   const isInView = useInView(ref, { once: true, margin: "-100px 0px" });
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.8, delay }}
+      style={{
+        opacity: isInView ? 1 : 0,
+        transform: `translateY(${isInView ? 0 : 30}px)`,
+        transition: `all 0.8s ease-out ${delay}s`,
+      }}
       className="w-full"
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 
 export default function Home() {
   return (
     <div className="w-full p-0 m-0 font-sans text-gray-900 bg-white">
-      {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center relative h-screen bg-gray-50 px-8">
-        <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="text-6xl font-bold m-0 tracking-tight md:text-7xl"
-        >
-          Datapolis
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="text-3xl font-light mt-4 tracking-tight"
-        >
-          Увидеть город.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="text-3xl absolute bottom-8 animate-bounce"
+      <section className="relative h-screen bg-gray-50 px-8 overflow-hidden">
+        <ThreeBackground />
+
+        <div className="absolute inset-0 flex flex-col justify-center items-center z-10 text-center">
+          <h1
+            className="text-6xl font-bold tracking-tight md:text-7xl"
+            style={{
+              opacity: 1,
+              transition: "opacity 1s ease-out",
+              color: "inherit",
+            }}
+          >
+            Datapolis
+          </h1>
+          <p
+            className="text-3xl font-light mt-4 tracking-tight"
+            style={{
+              opacity: 1,
+              transition: "opacity 1s ease-out",
+              color: "inherit",
+            }}
+          >
+            Увидеть город.
+          </p>
+        </div>
+
+        <button
+          onClick={() => {
+            document.querySelector("#what-is-section")?.scrollIntoView({
+              behavior: "smooth",
+            });
+          }}
+          className="text-3xl absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer bg-transparent border-none z-10 opacity-0"
+          style={{
+            opacity: 1,
+            transition: "opacity 1s ease-out",
+            color: "inherit",
+          }}
         >
           ↓
-        </motion.div>
+        </button>
       </section>
 
       {/* What Is Section */}
       <FadeInSection>
-        <section className="py-24 px-8 max-w-7xl mx-auto border-b border-gray-100">
+        <section
+          id="what-is-section"
+          className="py-24 px-8 max-w-7xl mx-auto border-b border-gray-100"
+        >
           <h2 className="text-4xl font-bold mb-12 relative inline-block after:content-[''] after:absolute after:bottom-[-10px] after:left-0 after:w-[60px] after:h-1 after:bg-gray-900">
             Что это?
           </h2>
@@ -80,41 +100,24 @@ export default function Home() {
             Что умеет?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            <motion.div
-              className="bg-gray-50 p-8 rounded shadow-sm text-lg leading-relaxed h-full"
-              whileHover={{ scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              Показывает районы с наибольшими налоговыми поступлениями
-            </motion.div>
-            <motion.div
-              className="bg-gray-50 p-8 rounded shadow-sm text-lg leading-relaxed h-full"
-              whileHover={{ scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              Выявляет концентрацию активного и крупного бизнеса
-            </motion.div>
-            <motion.div
-              className="bg-gray-50 p-8 rounded shadow-sm text-lg leading-relaxed h-full"
-              whileHover={{ scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              Анализирует отраслевую структуру по территориям
-            </motion.div>
-            <motion.div
-              className="bg-gray-50 p-8 rounded shadow-sm text-lg leading-relaxed h-full"
-              whileHover={{ scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              Визуализирует экономические центры города
-            </motion.div>
-            <motion.div
-              className="bg-gray-50 p-8 rounded shadow-sm text-lg leading-relaxed h-full"
-              whileHover={{ scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              Даёт инструмент для оценки и планирования на всех уровнях
-            </motion.div>
+            {[
+              "Показывает районы с наибольшими налоговыми поступлениями",
+              "Выявляет концентрацию активного и крупного бизнеса",
+              "Анализирует отраслевую структуру по территориям",
+              "Визуализирует экономические центры города",
+              "Даёт инструмент для оценки и планирования на всех уровнях",
+            ].map((text, index) => (
+              <div
+                key={index}
+                className="group bg-gray-50 p-8 rounded shadow-sm text-lg leading-relaxed h-full relative overflow-hidden transition-all duration-500 ease-out hover:scale-105"
+                style={{ transformOrigin: "center" }}
+              >
+                <div className="absolute inset-0 bg-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
+                <p className="relative z-10 transition-colors duration-500 group-hover:text-white">
+                  {text}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
       </FadeInSection>
@@ -125,32 +128,63 @@ export default function Home() {
           <h2 className="text-4xl font-bold mb-12 relative inline-block after:content-[''] after:absolute after:bottom-[-10px] after:left-0 after:w-[60px] after:h-1 after:bg-gray-900">
             Для кого?
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12 ">
-            <div className="pl-6 border-l-4 border-gray-900 py-4 hover:border-[#2563EB]">
-              <h3 className="text-2xl font-bold mb-4">Госорганы</h3>
-              <p className="text-gray-600">
-                чтобы понимать, где работает экономика, и усиливать рост
-              </p>
-            </div>
-            <div className="pl-6 border-l-4 border-gray-900 py-4 hover:border-[#2563EB]">
-              <h3 className="text-2xl font-bold mb-4">Бизнес</h3>
-              <p className="text-gray-600">чтобы видеть, где быть</p>
-            </div>
-            <div className="pl-6 border-l-4 border-gray-900 py-4 hover:border-[#2563EB]">
-              <h3 className="text-2xl font-bold mb-4">Градостроители</h3>
-              <p className="text-gray-600">чтобы планировать развитие умно</p>
-            </div>
-            <div className="pl-6 border-l-4 border-gray-900 py-4 hover:border-[#2563EB]">
-              <h3 className="text-2xl font-bold mb-4">Аналитики</h3>
-              <p className="text-gray-600">
-                чтобы опираться на данные, а не догадки
-              </p>
-            </div>
-            <div className="pl-6 border-l-4 border-gray-900 py-4 lg:col-span-4">
-              <h3 className="text-2xl font-bold mb-4">Горожане</h3>
-              <p className="text-gray-600">
-                чтобы понимать, где рождается городское будущее
-              </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+            {[
+              {
+                title: "Госорганы",
+                description:
+                  "чтобы понимать, где работает экономика, и усиливать рост",
+              },
+              {
+                title: "Бизнес",
+                description: "чтобы видеть, где быть",
+              },
+              {
+                title: "Градостроители",
+                description: "чтобы планировать развитие умно",
+              },
+              {
+                title: "Аналитики",
+                description: "чтобы опираться на данные, а не догадки",
+              },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="pl-6 border-l-4 border-gray-900 py-4 relative overflow-hidden group hover:border-[#2563EB] transition-all duration-500 ease-out hover:scale-105"
+                style={{ transformOrigin: "center" }}
+              >
+                <div className="absolute inset-0 bg-[#2563EB]/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
+                <div className="relative z-10">
+                  <h3 className="text-2xl font-bold mb-4 transition-colors duration-500">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 transition-colors duration-500 group-hover:text-gray-900">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+
+            {/* Wide card at the bottom */}
+            <div
+              className="pl-6 border-l-4 border-gray-900 py-4 lg:col-span-4 relative overflow-hidden group hover:border-[#2563EB] transition-all duration-500 ease-out hover:scale-105"
+              style={{ transformOrigin: "center" }}
+            >
+              <div
+                className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"
+                style={{
+                  background:
+                    "linear-gradient(to right, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0.2) 50%,  white 100%)",
+                }}
+              ></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold mb-4 transition-colors duration-500 ">
+                  Горожане
+                </h3>
+                <p className="text-gray-600 group-hover:text-gray-900 transition-colors duration-500">
+                  чтобы понимать, где рождается городское будущее
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -167,13 +201,15 @@ export default function Home() {
             которые работают — или нет. Datapolis помогает увидеть, где город
             живёт на полную мощность.
           </p>
-          <motion.button
-            className="bg-gray-900 text-white py-4 px-8 text-lg font-semibold rounded cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
+          <button
+            className="bg-[#2563EB] text-white py-4 px-8 text-lg font-semibold rounded cursor-pointer hover:scale-105 transition-all duration-500 ease-out "
+            style={{
+              transform: "scale(1)",
+              transition: "transform 0.2s ease-out",
+            }}
           >
             Изучить платформу
-          </motion.button>
+          </button>
         </section>
       </FadeInSection>
     </div>
