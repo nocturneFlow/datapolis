@@ -4,6 +4,8 @@ import { useInView } from "framer-motion";
 import { useRef, ReactNode } from "react";
 import ThreeBackground from "@/components/ThreeBackground";
 import { Button } from "@/components/ui/button";
+import { LineChart } from "recharts";
+import Link from "next/link";
 
 const FadeInSection = ({
   children,
@@ -205,15 +207,17 @@ export default function Home() {
             которые работают — или нет. Datapolis помогает увидеть, где город
             живёт на полную мощность.
           </p>
-          <Button
-            className="bg-primary text-white py-4 px-8 text-lg font-semibold rounded cursor-pointer hover:scale-105 transition-all duration-500 ease-out "
-            style={{
-              transform: "scale(1)",
-              transition: "transform 0.2s ease-out",
-            }}
-          >
-            Изучить платформу
-          </Button>
+          <Link href="/renovation">
+            <Button
+              className="bg-primary text-white py-4 px-8 text-lg font-semibold rounded cursor-pointer hover:scale-105 transition-all duration-500 ease-out "
+              style={{
+                transform: "scale(1)",
+                transition: "transform 0.2s ease-out",
+              }}
+            >
+              Изучить платформу
+            </Button>
+          </Link>
         </section>
       </FadeInSection>
     </div>
