@@ -3,6 +3,7 @@
 import { useInView } from "framer-motion";
 import { useRef, ReactNode } from "react";
 import ThreeBackground from "@/components/ThreeBackground";
+import { Button } from "@/components/ui/button";
 
 const FadeInSection = ({
   children,
@@ -11,8 +12,11 @@ const FadeInSection = ({
   children: ReactNode;
   delay?: number;
 }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px 0px" });
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref as React.RefObject<Element>, {
+    once: true,
+    margin: "-100px 0px",
+  });
 
   return (
     <div
@@ -112,7 +116,7 @@ export default function Home() {
                 className="group bg-gray-50 p-8 rounded shadow-sm text-lg leading-relaxed h-full relative overflow-hidden transition-all duration-500 ease-out hover:scale-105"
                 style={{ transformOrigin: "center" }}
               >
-                <div className="absolute inset-0 bg-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
+                <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
                 <p className="relative z-10 transition-colors duration-500 group-hover:text-white">
                   {text}
                 </p>
@@ -150,10 +154,10 @@ export default function Home() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="pl-6 border-l-4 border-gray-900 py-4 relative overflow-hidden group hover:border-[#2563EB] transition-all duration-500 ease-out hover:scale-105"
+                className="pl-6 border-l-4 border-gray-900 py-4 relative overflow-hidden group hover:border-primary transition-all duration-500 ease-out hover:scale-105"
                 style={{ transformOrigin: "center" }}
               >
-                <div className="absolute inset-0 bg-[#2563EB]/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
+                <div className="absolute inset-0 bg-primary/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
                 <div className="relative z-10">
                   <h3 className="text-2xl font-bold mb-4 transition-colors duration-500">
                     {item.title}
@@ -167,7 +171,7 @@ export default function Home() {
 
             {/* Wide card at the bottom */}
             <div
-              className="pl-6 border-l-4 border-gray-900 py-4 lg:col-span-4 relative overflow-hidden group hover:border-[#2563EB] transition-all duration-500 ease-out hover:scale-105"
+              className="pl-6 border-l-4 border-gray-900 py-4 lg:col-span-4 relative overflow-hidden group hover:border-primary transition-all duration-500 ease-out hover:scale-105"
               style={{ transformOrigin: "center" }}
             >
               <div
@@ -201,15 +205,15 @@ export default function Home() {
             которые работают — или нет. Datapolis помогает увидеть, где город
             живёт на полную мощность.
           </p>
-          <button
-            className="bg-[#2563EB] text-white py-4 px-8 text-lg font-semibold rounded cursor-pointer hover:scale-105 transition-all duration-500 ease-out "
+          <Button
+            className="bg-primary text-white py-4 px-8 text-lg font-semibold rounded cursor-pointer hover:scale-105 transition-all duration-500 ease-out "
             style={{
               transform: "scale(1)",
               transition: "transform 0.2s ease-out",
             }}
           >
             Изучить платформу
-          </button>
+          </Button>
         </section>
       </FadeInSection>
     </div>
