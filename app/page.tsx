@@ -4,7 +4,6 @@ import { useInView } from "framer-motion";
 import { useRef, ReactNode } from "react";
 import ThreeBackground from "@/components/ThreeBackground";
 import { Button } from "@/components/ui/button";
-import { LineChart } from "recharts";
 import Link from "next/link";
 
 const FadeInSection = ({
