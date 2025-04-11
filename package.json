@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@2gis/mapgl": "^1.58.1",
+    "@2gis/mapgl-clusterer": "^2.5.0",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-accordion": "^1.2.4",
     "@radix-ui/react-alert-dialog": "^1.1.7",
@@ -46,6 +48,7 @@
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^10.16.4",
     "input-otp": "^1.4.2",
+    "leaflet": "^1.9.4",
     "lucide-react": "^0.487.0",
     "next": "15.2.5",
     "next-themes": "^0.4.6",
@@ -53,6 +56,7 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.55.0",
+    "react-leaflet": "^5.0.0",
     "react-resizable-panels": "^2.1.7",
     "recharts": "^2.15.2",
     "sonner": "^2.0.3",

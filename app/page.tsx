@@ -41,35 +41,42 @@ export default function Home() {
         <ThreeBackground />
 
         <div className="absolute inset-0 flex flex-col justify-center items-center z-10 text-center">
-          <h1
-            className="text-6xl font-bold tracking-tight md:text-7xl"
-            style={{
-              opacity: 1,
-              transition: "opacity 1s ease-out",
-              color: "inherit",
-            }}
-          >
-            Datapolis
-          </h1>
-          <p
-            className="text-3xl font-light mt-4 tracking-tight"
-            style={{
-              opacity: 1,
-              transition: "opacity 1s ease-out",
-              color: "inherit",
-            }}
-          >
-            Увидеть город.
-          </p>
+          <div className="bg-primary/5 backdrop-blur-xs rounded-lg p-8">
+            <Link
+              href="/renovation"
+              className="hover:text-primary transition-all duration-500"
+            >
+              <h1
+                className="text-6xl font-bold tracking-tight md:text-7xl "
+                style={{
+                  opacity: 1,
+                  transition: "opacity 1s ease-out",
+                  color: "inherit",
+                }}
+              >
+                Datapolis
+              </h1>
+            </Link>
+            <p
+              className="text-3xl font-light mt-4 tracking-tight"
+              style={{
+                opacity: 1,
+                transition: "opacity 1s ease-out",
+                color: "inherit",
+              }}
+            >
+              Увидеть город.
+            </p>
+          </div>
         </div>
 
-        <button
+        <Button
           onClick={() => {
             document.querySelector("#what-is-section")?.scrollIntoView({
               behavior: "smooth",
             });
           }}
-          className="text-3xl absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer bg-transparent border-none z-10 opacity-0"
+          className="text-3xl absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer bg-transparent hover:bg-transparent border-none z-10 opacity-0"
           style={{
             opacity: 1,
             transition: "opacity 1s ease-out",
@@ -77,7 +84,7 @@ export default function Home() {
           }}
         >
           ↓
-        </button>
+        </Button>
       </section>
 
       {/* What Is Section */}
@@ -208,12 +215,14 @@ export default function Home() {
           </p>
           <Link href="/renovation">
             <Button
-              className="bg-primary text-white py-4 px-8 text-lg font-semibold rounded cursor-pointer hover:scale-105 transition-all duration-500 ease-out "
+              className="bg-primary text-white py-4 px-8 text-lg font-semibold rounded cursor-pointer hover:scale-105 transition-all duration-500 ease-out p-6"
               style={{
                 transform: "scale(1)",
                 transition: "transform 0.2s ease-out",
               }}
             >
+              {" "}
+              <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
               Изучить платформу
             </Button>
           </Link>
