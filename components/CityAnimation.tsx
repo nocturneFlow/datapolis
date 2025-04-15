@@ -108,7 +108,28 @@ const CityAnimation = () => {
     ];
 
     // Create cubes grid with Apple-like glass/aluminum finish
-    const cubes = [];
+    const cubes: {
+      pivot: THREE.Object3D<THREE.Object3DEventMap>;
+      mesh: THREE.Mesh<
+        THREE.BoxGeometry,
+        THREE.MeshPhysicalMaterial,
+        THREE.Object3DEventMap
+      >;
+      row: number;
+      col: number;
+      x: number;
+      z: number;
+      maxHeight: number;
+      targetY: number; // Target position (initially hidden)
+      currentY: number; // Current position
+      activated: boolean;
+      targetOpacity: number; // Start invisible
+      currentOpacity: number;
+      animationSpeed: number; // Slightly varied but consistent animation speed
+      color: THREE.Color;
+      initialColor: THREE.Color;
+      isAccent: boolean;
+    }[] = [];
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
         // Calculate position
@@ -182,7 +203,7 @@ const CityAnimation = () => {
     const mouseWorldPosition = new THREE.Vector3();
 
     // Handle mouse movement
-    const handleMouseMove = (event) => {
+    const handleMouseMove = (event: { clientX: number; clientY: number }) => {
       // Calculate normalized mouse position
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -240,7 +261,7 @@ const CityAnimation = () => {
     containerRef.current.addEventListener("mousemove", handleMouseMove);
 
     // Animation loop
-    let animationFrameId;
+    let animationFrameId: number;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 

@@ -14,9 +14,11 @@ export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get("access-token")?.value;
   const refreshToken = request.cookies.get("refresh-token")?.value;
 
+  const isAuthenticated = !!accessToken || !!refreshToken;
+
   // Protect routes that require authentication
   if (protectedPaths.some((path) => pathname.startsWith(path))) {
-    if (!accessToken && !refreshToken) {
+    if (!isAuthenticated) {
       // Store the current path in a searchParam for redirection after login
       const url = new URL("/login", request.url);
       url.searchParams.set("from", pathname);
@@ -26,7 +28,7 @@ export function middleware(request: NextRequest) {
 
   // Prevent authenticated users from accessing login/register pages
   if (authPaths.some((path) => pathname.startsWith(path))) {
-    if (accessToken || refreshToken) {
+    if (isAuthenticated) {
       return NextResponse.redirect(new URL("/renovation", request.url));
     }
   }

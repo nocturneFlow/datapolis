@@ -97,12 +97,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       // Get the fromPath from localStorage if it exists
       const fromPath = localStorage.getItem("fromPath") || "/renovation";
-      localStorage.removeItem("fromPath"); // Clean up
+      localStorage.removeItem("fromPath"); // Clean up after use
 
       router.push(fromPath);
     } catch (error) {
       console.error("Login error:", error);
-      throw error;
+      throw error; // Rethrow to allow the login page to handle display
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { z } from "zod";
 import Link from "next/link";
@@ -10,13 +10,36 @@ import { useSearchParams } from "next/navigation";
 // Zod schema for form validation
 const loginSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters"),
-  password: z.string().min(3, "Password must be at least 8 characters"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
-export default function Login() {
-  const { login, loading, isAuthenticated } = useAuth();
+// Loading component for Suspense fallback
+function LoginFormSkeleton() {
+  return (
+    <div className="flex flex-col md:flex-row h-screen w-full bg-gradient-to-br from-gray-900 to-gray-800 overflow-hidden">
+      <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-8 overflow-y-auto">
+        <div className="w-full max-w-md">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-700 rounded w-3/4 mb-2"></div>
+            <div className="h-4 bg-gray-700 rounded w-1/2 mb-8"></div>
+            <div className="space-y-5 md:space-y-6">
+              <div className="h-12 bg-gray-800 rounded"></div>
+              <div className="h-12 bg-gray-800 rounded"></div>
+              <div className="h-5 bg-gray-800 rounded w-full"></div>
+              <div className="h-10 bg-blue-800 rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="hidden md:block md:w-1/2 bg-blue-600"></div>
+    </div>
+  );
+}
+
+function LoginForm() {
+  const { login, loading } = useAuth();
   const searchParams = useSearchParams();
   const fromPath = searchParams.get("from");
 
@@ -27,6 +50,7 @@ export default function Login() {
   const [errors, setErrors] = useState<Partial<LoginFormData>>({});
   const [authError, setAuthError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   // Store redirect path in localStorage for access after login
   useEffect(() => {
@@ -45,6 +69,10 @@ export default function Login() {
     if (authError) {
       setAuthError(null);
     }
+  };
+
+  const handleRememberMeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRememberMe(e.target.checked);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -79,12 +107,12 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
+    <div className="flex flex-col md:flex-row h-screen w-full bg-gradient-to-br from-gray-900 to-gray-800 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full md:w-1/2 flex items-center justify-center p-8"
+        className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-8 overflow-y-auto"
       >
         <div className="w-full max-w-md">
           <motion.div
@@ -92,8 +120,10 @@ export default function Login() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            <h1 className="text-4xl font-bold text-white mb-2">Welcome back</h1>
-            <p className="text-gray-400 mb-8">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              Welcome back
+            </h1>
+            <p className="text-gray-400 mb-6 md:mb-8">
               Sign in to your account to continue
             </p>
           </motion.div>
@@ -113,7 +143,7 @@ export default function Login() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
             onSubmit={handleSubmit}
-            className="space-y-6"
+            className="space-y-5 md:space-y-6"
           >
             <div className="space-y-2">
               <label
@@ -190,6 +220,8 @@ export default function Login() {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
+                  checked={rememberMe}
+                  onChange={handleRememberMeChange}
                   className="h-4 w-4 rounded border-gray-700 bg-gray-800 text-blue-500 focus:ring-blue-500"
                 />
                 <label
@@ -232,10 +264,10 @@ export default function Login() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="mt-8 text-center"
+            className="mt-6 md:mt-8 text-center"
           >
             <p className="text-gray-400">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 href="/register"
                 className="text-blue-500 hover:text-blue-400 transition"
@@ -251,22 +283,24 @@ export default function Login() {
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="hidden md:block md:w-1/2 bg-cover bg-center relative overflow-hidden"
+        className="hidden md:flex md:w-1/2 bg-cover bg-center relative"
       >
         <div className="absolute inset-0 bg-blue-600 opacity-90"></div>
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-12">
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-8 md:p-12">
           <motion.div
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="max-w-md text-center"
+            className="max-w-xl xl:max-w-2xl text-center"
           >
-            <h2 className="text-3xl font-bold mb-6">Datapolis Platform</h2>
-            <p className="text-lg text-white/80 mb-8">
+            <h2 className="text-2xl md:text-3xl xl:text-4xl font-bold mb-4 md:mb-6">
+              Datapolis Platform
+            </h2>
+            <p className="text-base md:text-lg xl:text-xl text-white/80 mb-6 md:mb-8">
               Access powerful geospatial data analytics and visualization tools
               to transform your location data into actionable insights.
             </p>
-            <div className="mt-10 w-full max-w-xs mx-auto">
+            <div className="mt-6 md:mt-10 w-full max-w-xs mx-auto">
               <motion.div
                 animate={{
                   y: [0, -10, 0],
@@ -277,9 +311,8 @@ export default function Login() {
                   repeatType: "reverse",
                   duration: 5,
                 }}
-                className="relative h-64 w-64 mx-auto"
+                className="relative h-40 md:h-64 w-40 md:w-64 mx-auto"
               >
-                {/* This is where you might add an illustrative SVG or image */}
                 <div className="absolute inset-0 bg-white/10 rounded-full"></div>
                 <div className="absolute inset-4 bg-white/20 rounded-full"></div>
                 <div className="absolute inset-8 bg-white/30 rounded-full"></div>
@@ -289,5 +322,13 @@ export default function Login() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<LoginFormSkeleton />}>
+      <LoginForm />
+    </Suspense>
   );
 }

@@ -14,7 +14,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -53,18 +52,6 @@ const Map: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Function to get key property metrics for display in the popup
-  const getKeyMetrics = (
-    rows: { name: string; value: string; info: string }[]
-  ) => {
-    const metrics = [
-      rows.find((row) => row.name.includes("Площадь")),
-      rows.find((row) => row.name.includes("Население")),
-      rows.find((row) => row.name.includes("Плотность населения")),
-      rows.find((row) => row.name.includes("Коммерческих помещений")),
-    ].filter(Boolean);
-
-    return metrics;
-  };
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
@@ -202,7 +189,7 @@ const Map: React.FC = () => {
           setSelectedProperty(propertyData);
 
           // Create popup content
-          let popupContent = document.createElement("div");
+          const popupContent = document.createElement("div");
           popupContent.className = "area-popup";
 
           // Render basic popup HTML
