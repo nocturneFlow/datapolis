@@ -41,33 +41,28 @@ export default function Home() {
         <ThreeBackground />
 
         <div className="absolute inset-0 flex flex-col justify-center items-center z-10 text-center">
-          <div className="bg-primary/5 backdrop-blur-xs rounded-lg p-8">
-            <Link
-              href="/renovation"
-              className="hover:text-primary transition-all duration-500"
-            >
-              <h1
-                className="text-6xl font-bold tracking-tight md:text-7xl "
-                style={{
-                  opacity: 1,
-                  transition: "opacity 1s ease-out",
-                  color: "inherit",
-                }}
-              >
-                Datapolis
-              </h1>
-            </Link>
-            <p
-              className="text-3xl font-light mt-4 tracking-tight"
+          <Link href="/renovation">
+            <h1
+              className="text-6xl font-bold tracking-tight md:text-7xl"
               style={{
                 opacity: 1,
                 transition: "opacity 1s ease-out",
                 color: "inherit",
               }}
             >
-              Увидеть город.
-            </p>
-          </div>
+              Datapolis
+            </h1>
+          </Link>
+          <p
+            className="text-3xl font-light mt-4 tracking-tight"
+            style={{
+              opacity: 1,
+              transition: "opacity 1s ease-out",
+              color: "inherit",
+            }}
+          >
+            Увидеть город.
+          </p>
         </div>
 
         <Button
