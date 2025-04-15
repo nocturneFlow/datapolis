@@ -41,6 +41,7 @@ const NavBar = () => {
   const navLinks = [
     { href: "/", label: "Главная" },
     { href: "/renovation", label: "Реновация" },
+    { href: "/survey", label: "Опрос" },
     { href: "/faqs", label: "FAQs" },
   ];
 
