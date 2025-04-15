@@ -1,84 +1,91 @@
-"use client";
+// "use client";
 
-import { useState } from "react";
+// import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+// import { Checkbox } from "@/components/ui/checkbox";
+// import { Label } from "@/components/ui/label";
+// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card } from "@/components/ui/card";
+import Link from "next/link";
+
+export const metadata = {
+  title: "Syrvey | Datapolis",
+  description:
+    "Explore geographic information system analytics and data visualization",
+};
 
 export default function SurveyPage() {
-  const [submitted, setSubmitted] = useState(false);
-  const [fullySurveyCompleted, setFullySurveyCompleted] = useState(false);
-  const [currentSection, setCurrentSection] = useState(1);
-  const totalSections = 2;
+  // const [submitted, setSubmitted] = useState(false);
+  // const [fullySurveyCompleted, setFullySurveyCompleted] = useState(false);
+  // const [currentSection, setCurrentSection] = useState(1);
+  // const totalSections = 2;
 
-  const checkboxStyles =
-    "size-5 border-2 hover:border-primary/80 hover:bg-primary/10";
-  const radioStyles =
-    "size-5 border-2 hover:border-primary/80 hover:bg-primary/10";
+  // const checkboxStyles =
+  //   "size-5 border-2 hover:border-primary/80 hover:bg-primary/10";
+  // const radioStyles =
+  //   "size-5 border-2 hover:border-primary/80 hover:bg-primary/10";
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (currentSection < totalSections) {
-      setSubmitted(true);
-    } else {
-      setFullySurveyCompleted(true);
-    }
-  };
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (currentSection < totalSections) {
+  //     setSubmitted(true);
+  //   } else {
+  //     setFullySurveyCompleted(true);
+  //   }
+  // };
 
-  const nextSection = () => {
-    if (currentSection < totalSections) {
-      setCurrentSection(currentSection + 1);
-      window.scrollTo(0, 0);
-    }
-  };
+  // const nextSection = () => {
+  //   if (currentSection < totalSections) {
+  //     setCurrentSection(currentSection + 1);
+  //     window.scrollTo(0, 0);
+  //   }
+  // };
 
-  const prevSection = () => {
-    if (currentSection > 1) {
-      setCurrentSection(currentSection - 1);
-      window.scrollTo(0, 0);
-    }
-  };
+  // const prevSection = () => {
+  //   if (currentSection > 1) {
+  //     setCurrentSection(currentSection - 1);
+  //     window.scrollTo(0, 0);
+  //   }
+  // };
 
-  if (fullySurveyCompleted) {
-    return (
-      <div className="container max-w-4xl py-12 mx-auto text-center">
-        <Card className="p-10 shadow-md">
-          <h2 className="text-3xl font-bold mb-4 text-primary">
-            Спасибо за прохождение опроса!
-          </h2>
-          <p className="text-lg mb-6">
-            Ваши ответы были успешно отправлены. Ваше мнение очень важно для нас
-            и поможет нам улучшить планирование и развитие района.
-          </p>
-          <Button onClick={() => (window.location.href = "/")} className="mt-4">
-            Вернуться на главную
-          </Button>
-        </Card>
-      </div>
-    );
-  }
+  // if (fullySurveyCompleted) {
+  //   return (
+  //     <div className="container max-w-4xl py-12 mx-auto text-center">
+  //       <Card className="p-10 shadow-md">
+  //         <h2 className="text-3xl font-bold mb-4 text-primary">
+  //           Спасибо за прохождение опроса!
+  //         </h2>
+  //         <p className="text-lg mb-6">
+  //           Ваши ответы были успешно отправлены. Ваше мнение очень важно для нас
+  //           и поможет нам улучшить планирование и развитие района.
+  //         </p>
+  //         <Button onClick={() => (window.location.href = "/")} className="mt-4">
+  //           Вернуться на главную
+  //         </Button>
+  //       </Card>
+  //     </div>
+  //   );
+  // }
 
-  if (submitted) {
-    return (
-      <div className="container max-w-4xl py-12 mx-auto text-center">
-        <Card className="p-10 shadow-md">
-          <h2 className="text-3xl font-bold mb-4 text-primary">
-            Вы закончили первый раздел!
-          </h2>
-          <p className="text-lg mb-6">
-            Пожалуйста, уделите несколько минут, чтобы ответить на оставшиеся
-            вопросы. Ваше мнение очень важно для нас и поможет учесть ваши
-            пожелания при планировании.
-          </p>
-          <Button onClick={() => setSubmitted(false)} className="mt-4">
-            Перейти к разделу 2
-          </Button>
-        </Card>
-      </div>
-    );
-  }
+  // if (submitted) {
+  //   return (
+  //     <div className="container max-w-4xl py-12 mx-auto text-center">
+  //       <Card className="p-10 shadow-md">
+  //         <h2 className="text-3xl font-bold mb-4 text-primary">
+  //           Вы закончили первый раздел!
+  //         </h2>
+  //         <p className="text-lg mb-6">
+  //           Пожалуйста, уделите несколько минут, чтобы ответить на оставшиеся
+  //           вопросы. Ваше мнение очень важно для нас и поможет учесть ваши
+  //           пожелания при планировании.
+  //         </p>
+  //         <Button onClick={() => setSubmitted(false)} className="mt-4">
+  //           Перейти к разделу 2
+  //         </Button>
+  //       </Card>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="container max-w-4xl py-12 mx-auto">
@@ -94,9 +101,16 @@ export default function SurveyPage() {
           разработке проекта. Пожалуйста, уделите несколько минут для ответа на
           вопросы.
         </p>
+        <Link
+          href="https://docs.google.com/forms/d/12UUfYiMZy4wKr0ISb9E-ZVApyjZEOPGJqGnbN-xI0rY/edit?ts=66f11e65"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button>Пройти опрос</Button>
+        </Link>
       </Card>
 
-      <div className="flex justify-end mb-6 sticky top-14 z-10">
+      {/* <div className="flex justify-end mb-6 sticky top-14 z-10">
         <div className="rounded-4xl max-w-36 border-solid border-2 sticky top-14 z-10 bg-trasparent backdrop-blur-2xl p-3 mb-6 shadow-sm ">
           <div className="text-center">
             <p className="text-sm font-medium mb-1">
@@ -114,12 +128,11 @@ export default function SurveyPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      {/* <form onSubmit={handleSubmit} className="space-y-8">
         {currentSection === 1 && (
           <div>
-            {/* Блок 1: Социальные объекты */}
             <div className="space-y-6 mb-10">
               <h2 className="text-2xl font-semibold border-b pb-2">
                 Блок 1: Социальные объекты
@@ -216,7 +229,7 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            {/* Блок 2: Общественные пространства */}
+            
             <div className="space-y-6 mb-10">
               <h2 className="text-2xl font-semibold border-b pb-2">
                 Блок 2: Общественные пространства
@@ -268,7 +281,6 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            {/* Блок 3: Объекты малого и среднего бизнеса */}
             <div className="space-y-6 mb-10">
               <h2 className="text-2xl font-semibold border-b pb-2">
                 Блок 3: Объекты малого и среднего бизнеса
@@ -332,7 +344,6 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            {/* Блок 4: Благоустройство */}
             <div className="space-y-6 mb-10">
               <h2 className="text-2xl font-semibold border-b pb-2">
                 Блок 4: Благоустройство
@@ -383,7 +394,6 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            {/* Блок 5: Инфраструктура */}
             <div className="space-y-6 mb-10">
               <h2 className="text-2xl font-semibold border-b pb-2">
                 Блок 5: Инфраструктура
@@ -548,7 +558,6 @@ export default function SurveyPage() {
               </div>
             </div>
 
-            {/* Блок 6: Безопасность */}
             <div className="space-y-6 mb-10">
               <h2 className="text-2xl font-semibold border-b pb-2">
                 Блок 6: Безопасность
@@ -1031,7 +1040,7 @@ export default function SurveyPage() {
             </Button>
           )}
         </div>
-      </form>
+      </form> */}
     </div>
   );
 }
