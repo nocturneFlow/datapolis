@@ -76,7 +76,7 @@ export default function Home() {
               behavior: "smooth",
             });
           }}
-          className="text-3xl absolute bottom-16 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer bg-transparent hover:bg-transparent border-none z-10 opacity-0"
+          className="text-3xl absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer bg-transparent hover:bg-transparent border-none z-10 opacity-0"
           style={{
             opacity: 1,
             transition: "opacity 1s ease-out",

@@ -10,7 +10,7 @@ export default function AppWrapper({
 }) {
   const pathname = usePathname();
 
-  const hiddenNavPaths = ["/login", "/404", "/not-found"];
+  const hiddenNavPaths = ["/", "/login", "/404", "/not-found"];
   const hideNavbar = !hiddenNavPaths.includes(pathname);
 
   return (
