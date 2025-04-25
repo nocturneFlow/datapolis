@@ -2,13 +2,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 
-import { Providers } from "@/app/providers";
-
 import "./globals.css";
+import { AuthProvider } from "@/contexts/auth-context";
 
 const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin", "cyrillic"],
 });
 
 export const metadata: Metadata = {
@@ -23,9 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} antialiased`}>
-        <Providers>{children}</Providers>
-        <Toaster />
+      <body className={`${inter.className} antialiased`}>
+        <AuthProvider>
+          {children}
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );

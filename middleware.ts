@@ -1,40 +1,49 @@
+// middleware.ts
+
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Define which paths require authentication
-const protectedPaths = ["/renovation", "/admin", "/admin/register", "/profile"];
-
-// Define paths that should be accessible only to non-authenticated users
-const authPaths = ["/login"];
-
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const refreshToken = request.cookies.get("refresh_token")?.value;
 
-  // Check for authentication tokens
-  const accessToken = request.cookies.get("access-token")?.value;
-  const refreshToken = request.cookies.get("refresh-token")?.value;
+  // Define protected paths, including dynamic segments
+  const protectedPaths = ["/admin"];
 
-  // Protect routes that require authentication
-  if (protectedPaths.some((path) => pathname.startsWith(path))) {
-    if (!accessToken && !refreshToken) {
-      // Store the current path in a searchParam for redirection after login
-      const url = new URL("/login", request.url);
-      url.searchParams.set("from", pathname);
-      return NextResponse.redirect(url);
-    }
+  const isProtectedRoute = protectedPaths.some((protectedPath) =>
+    pathname.startsWith(protectedPath)
+  );
+
+  if (pathname === "/") {
+    return NextResponse.redirect(new URL("/admin", request.url));
   }
 
-  // Prevent authenticated users from accessing login/register pages
-  if (authPaths.some((path) => pathname.startsWith(path))) {
-    if (accessToken || refreshToken) {
-      return NextResponse.redirect(new URL("/renovation", request.url));
+  // Check for protected routes
+  if (isProtectedRoute) {
+    if (!refreshToken) {
+      // If token is absent, redirect to sign-in page
+      const signInUrl = new URL("/sign-in", request.url);
+      return NextResponse.redirect(signInUrl);
     }
+    // Token exists, proceed to the requested page
+    return NextResponse.next();
   }
 
+  // Continue the request for all other routes
   return NextResponse.next();
 }
 
-// Configure middleware to run only on specific paths
+// Apply middleware to all routes under the protected paths
 export const config = {
-  matcher: [...protectedPaths, ...authPaths],
+  matcher: [
+    "/",
+    "/applications/:path*",
+    "/cashier/:path*",
+    "/fines/:path*",
+    "/incidents/:path*",
+    "/employees/:path*",
+    "/expenses/:path*",
+    "/cars/:path*",
+    "/analytics/:path*",
+  ],
 };
