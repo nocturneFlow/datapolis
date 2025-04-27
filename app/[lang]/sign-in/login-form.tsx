@@ -26,43 +26,78 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/auth-context";
 
-// Define the shape of our form schema
-const formSchema = z.object({
-  username: z
-    .string()
-    .min(3, { message: "Минимум 3 символа" })
-    .max(50, { message: "Максимум 50 символов" })
-    .regex(/^[a-zA-Z0-9_-]+$/, { message: "Недопустимые символы" }),
-  password: z
-    .string()
-    .min(8, { message: "Минимум 8 символов" })
-    .max(100, { message: "Максимум 100 символов" }),
-});
-
-// Define types for form values
-type FormValues = z.infer<typeof formSchema>;
-
-// Type for the login response
-interface LoginResponse {
-  token: string;
-  expires_in: number;
-  message?: string;
+interface LoginFormProps {
+  dictionary: {
+    signIn: {
+      title: string;
+      description: string;
+      username: string;
+      password: string;
+      button: string;
+      buttonLoading: string;
+      errors: {
+        generic: string;
+        tooManyAttempts: string;
+        tryLater: string;
+      };
+      success: {
+        title: string;
+        description: string;
+      };
+      validation: {
+        username: {
+          min: string;
+          max: string;
+          invalid: string;
+        };
+        password: {
+          min: string;
+          max: string;
+        };
+      };
+    };
+  };
 }
 
-// Define prop types for InputWithAnimation component
+// Interface InputWithAnimationProps and LoginResponse definitions
 interface InputWithAnimationProps {
   field: any;
   type?: string;
   placeholder: string;
 }
 
-export default function LoginForm(): JSX.Element {
+interface LoginResponse {
+  token: string;
+  expires_in: number;
+  message?: string;
+}
+
+export default function LoginForm({ dictionary }: LoginFormProps): JSX.Element {
+  const { signIn } = dictionary;
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setAccessToken } = useAuth();
   const [attempts, setAttempts] = useState<number>(0);
   const MAX_ATTEMPTS = 5;
   const LOCKOUT_TIME = 15 * 60 * 1000; // 15 minutes
+
+  // Define the shape of our form schema with localized messages
+  const formSchema = z.object({
+    username: z
+      .string()
+      .min(3, { message: signIn.validation.username.min })
+      .max(50, { message: signIn.validation.username.max })
+      .regex(/^[a-zA-Z0-9_-]+$/, {
+        message: signIn.validation.username.invalid,
+      }),
+    password: z
+      .string()
+      .min(8, { message: signIn.validation.password.min })
+      .max(100, { message: signIn.validation.password.max }),
+  });
+
+  // Define types for form values
+  type FormValues = z.infer<typeof formSchema>;
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -151,8 +186,8 @@ export default function LoginForm(): JSX.Element {
         localStorage.getItem("lastLoginAttempt") || "0"
       );
       if (Date.now() - lastAttempt < LOCKOUT_TIME) {
-        toast.error("Слишком много попыток", {
-          description: "Попробуйте позже",
+        toast.error(signIn.errors.tooManyAttempts, {
+          description: signIn.errors.tryLater,
         });
         return;
       }
@@ -182,21 +217,21 @@ export default function LoginForm(): JSX.Element {
           JSON.stringify({ username: values.username })
         );
 
-        toast.success("Успешный вход", {
-          description: "Добро пожаловать в систему",
+        toast.success(signIn.success.title, {
+          description: signIn.success.description,
         });
 
         router.push("/");
       } else {
-        throw new Error(data.message || "Произошла ошибка при входе");
+        throw new Error(data.message || signIn.errors.generic);
       }
     } catch (error) {
       setAttempts((prev) => prev + 1);
       localStorage.setItem("lastLoginAttempt", Date.now().toString());
 
-      toast.error("Ошибка", {
+      toast.error("Error", {
         description:
-          error instanceof Error ? error.message : "Произошла ошибка при входе",
+          error instanceof Error ? error.message : signIn.errors.generic,
       });
     } finally {
       setIsLoading(false);
@@ -264,13 +299,13 @@ export default function LoginForm(): JSX.Element {
               className="text-2xl md:text-3xl font-bold tracking-tight"
               variants={titleVariants}
             >
-              Вход
+              {signIn.title}
             </motion.h1>
             <motion.p
               className="text-sm md:text-base text-zinc-500"
               variants={descVariants}
             >
-              Введите свои учетные данные для доступа к аккаунту
+              {signIn.description}
             </motion.p>
           </div>
 
@@ -288,7 +323,7 @@ export default function LoginForm(): JSX.Element {
                   render={({ field }) => (
                     <FormItem className="space-y-3">
                       <FormLabel className="text-base">
-                        Имя пользователя
+                        {signIn.username}
                       </FormLabel>
                       <FormControl>
                         <InputWithAnimation
@@ -313,7 +348,9 @@ export default function LoginForm(): JSX.Element {
                   name="password"
                   render={({ field }) => (
                     <FormItem className="space-y-3">
-                      <FormLabel className="text-base">Пароль</FormLabel>
+                      <FormLabel className="text-base">
+                        {signIn.password}
+                      </FormLabel>
                       <FormControl>
                         <InputWithAnimation
                           field={field}
@@ -337,7 +374,7 @@ export default function LoginForm(): JSX.Element {
                   className="w-full h-12 md:h-10 text-base"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Вход..." : "Войти"}
+                  {isLoading ? signIn.buttonLoading : signIn.button}
                 </Button>
               </motion.div>
             </form>
