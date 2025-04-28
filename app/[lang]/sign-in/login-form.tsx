@@ -92,7 +92,7 @@ export default function LoginForm({ dictionary }: LoginFormProps): JSX.Element {
       }),
     password: z
       .string()
-      .min(8, { message: signIn.validation.password.min })
+      .min(3, { message: signIn.validation.password.min })
       .max(100, { message: signIn.validation.password.max }),
   });
 
