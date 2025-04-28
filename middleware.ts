@@ -29,7 +29,8 @@ export function middleware(request: NextRequest) {
   const refreshToken = request.cookies.get("refresh_token")?.value;
 
   // Check if pathname should be ignored (public files)
-  // if (['/manifest.json', '/favicon.ico'].includes(pathname)) return NextResponse.next();
+  if (["/manifest.json", "/favicon.ico"].includes(pathname))
+    return NextResponse.next();
 
   // Check if there is any supported locale in the pathname
   const pathnameHasLocale = i18n.locales.some(
@@ -37,7 +38,7 @@ export function middleware(request: NextRequest) {
   );
 
   // Define protected paths, including dynamic segments
-  const protectedPaths = ["/admin"];
+  const protectedPaths = ["/admin", "/map"];
   const isProtectedRoute = protectedPaths.some((protectedPath) =>
     pathname.includes(protectedPath)
   );
@@ -45,7 +46,7 @@ export function middleware(request: NextRequest) {
   // Handle root redirect (adjusted for i18n)
   if (pathname === "/") {
     const locale = getLocale(request);
-    return NextResponse.redirect(new URL(`/${locale}/admin`, request.url));
+    return NextResponse.redirect(new URL(`/${locale}/map`, request.url));
   }
 
   // Handle locale redirection first if needed
@@ -81,14 +82,7 @@ export const config = {
     // i18n paths
     "/((?!api|_next/static|_next/image|favicon.ico).*)",
     // Original protected paths
-    "/",
-    "/applications/:path*",
-    "/cashier/:path*",
-    "/fines/:path*",
-    "/incidents/:path*",
-    "/employees/:path*",
-    "/expenses/:path*",
-    "/cars/:path*",
-    "/analytics/:path*",
+    "/map/:path*",
+    "/admin/:path*",
   ],
 };

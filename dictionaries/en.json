@@ -26,5 +26,93 @@
         "max": "Maximum 100 characters"
       }
     }
+  },
+  "storytelling": {
+    "navigation": {
+      "hero": "hero",
+      "about": "about",
+      "services": "services",
+      "caseStudies": "case studies"
+    },
+    "header": {
+      "brand": "Datapolis"
+    },
+    "hero": {
+      "tagline": "Data that drives",
+      "highlight": "human progress",
+      "description": "We transform complex data into meaningful insights, enabling organizations to make informed decisions and create positive impact in the world.",
+      "cta": {
+        "primary": "Discover our story",
+        "secondary": "Our services"
+      }
+    },
+    "about": {
+      "title": "Our story began with a simple question",
+      "intro": "In a world overwhelmed by data but starving for meaning, we asked:",
+      "question": "\"How can we transform data into a catalyst for positive change?\"",
+      "description": "Founded in 2015, Datapolis emerged from the vision that data should serve humanity, not the other way around. Our team of data scientists, designers, and developers works at the intersection of technology and human needs, creating solutions that matter.",
+      "stats": [
+        { "number": "12+", "label": "Years Experience" },
+        { "number": "98%", "label": "Client Satisfaction" },
+        { "number": "230+", "label": "Projects Completed" },
+        { "number": "18", "label": "Industry Awards" }
+      ]
+    },
+    "services": {
+      "title": "Our approach to transform your data",
+      "offerings": [
+        {
+          "title": "Data Analysis",
+          "description": "We illuminate hidden patterns and trends in your data through advanced analytics techniques.",
+          "icon": "📊"
+        },
+        {
+          "title": "Visual Storytelling",
+          "description": "We craft compelling visual narratives that make complex information accessible and actionable.",
+          "icon": "📈"
+        },
+        {
+          "title": "Predictive Models",
+          "description": "We build machine learning models that help you anticipate future trends and make proactive decisions.",
+          "icon": "🧠"
+        }
+      ],
+      "action": "Read more"
+    },
+    "caseStudies": {
+      "title": "Our impact stories",
+      "cases": [
+        {
+          "title": "Financial Analytics Platform",
+          "description": "How we helped a global financial institution reduce decision time by 64% through our real-time analytics dashboard.",
+          "tag": "Financial Services",
+          "action": "Read case study"
+        },
+        {
+          "title": "Healthcare Data Integration",
+          "description": "Creating a unified patient data system that improved care coordination and reduced treatment delays by 53%.",
+          "tag": "Healthcare",
+          "action": "Read case study"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to unlock the potential in your data?",
+      "description": "Let's collaborate to create data solutions that drive real impact for your organization.",
+      "button": "Start a conversation",
+      "alreadyHaveAccess": "Already have access? Sign in"
+    },
+    "footer": {
+      "brand": "Datapolis",
+      "description": "Transforming data into insights that drive human progress and innovation.",
+      "headings": {
+        "company": "Company",
+        "legal": "Legal"
+      },
+      "company": ["About", "Services", "Team", "Careers", "Contact"],
+      "legal": ["Privacy Policy", "Terms of Service", "Cookie Policy"],
+      "copyright": "© {year} Datapolis. All rights reserved.",
+      "tagline": "Designed with Swiss precision"
+    }
   }
 }
