@@ -4,8 +4,10 @@ import { Toaster } from "sonner";
 
 import { i18n, type Locale } from "@/i18n-config";
 
-import "./globals.css";
+import "@/globals.css";
+
 import { AuthProvider } from "@/contexts/auth-context";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -32,8 +34,15 @@ export default async function RootLayout(props: {
     <html lang={params.lang} suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
         <AuthProvider>
-          {children}
-          <Toaster />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <Toaster />
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>
