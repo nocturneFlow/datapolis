@@ -26,16 +26,16 @@ export default async function RootLayout(props: {
   children: React.ReactNode;
   params: { lang: Locale };
 }) {
-  const { params } = props;
-
-  const { children } = props;
+  const { children, params } = props;
+  // Extract the lang parameter before using it in JSX
+  const lang = params.lang;
 
   return (
-    <html lang={params.lang} suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

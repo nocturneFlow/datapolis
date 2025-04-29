@@ -1,8 +1,11 @@
-export default function Page() {
+// app/page.tsx
+"use client";
+import Map from "@/components/Map";
+
+export default function HomePage() {
   return (
-    <div>
-      <h1>Page</h1>
-      <p>Welcome to the page!</p>
-    </div>
+    <main>
+      <Map initialZoom={12} initialCenter={[-73.9857, 40.7484]} />
+    </main>
   );
 }

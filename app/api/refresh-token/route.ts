@@ -20,27 +20,16 @@ export async function POST(request: NextRequest) {
 
     const data = response.data;
 
-    // Извлечение данных из data
-    const {
-      token: access_token,
-      expires_in,
-      refresh_token: new_refresh_token,
-      refresh_expires_in,
-    } = data;
+    // Extract only access_token and expires_in since refresh token won't change
+    const { token: access_token, expires_in } = data;
 
     const res = NextResponse.json(
       { message: "Токен обновлен", access_token, expires_in },
       { status: 200 }
     );
 
-    // Обновление cookie
-    res.cookies.set("refresh_token", new_refresh_token, {
-      httpOnly: true,
-      secure: true,
-      maxAge: refresh_expires_in,
-      path: "/",
-      sameSite: "strict",
-    });
+    // No need to update the refresh_token cookie as it remains the same
+    // Just keep the existing one
 
     return res;
   } catch (error: unknown) {

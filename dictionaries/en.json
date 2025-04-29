@@ -114,5 +114,32 @@
       "copyright": "© {year} Datapolis. All rights reserved.",
       "tagline": "Designed with Swiss precision"
     }
+  },
+  "map": {
+    "title": "Interactive Map",
+    "description": "Explore regional data with our interactive visualization",
+    "filters": {
+      "title": "Map Filters",
+      "metrics": "Metrics",
+      "layers": "Layers",
+      "visualization": "Visualization",
+      "apply": "Apply",
+      "reset": "Reset"
+    },
+    "infoPanel": {
+      "title": "Region Info",
+      "noSelection": "Select a region to view details",
+      "metrics": {
+        "area": "Area",
+        "population": "Population",
+        "density": "Population Density",
+        "crimes": "Crime Count",
+        "crimesPerCapita": "Crimes per 1000",
+        "cameras": "Cameras",
+        "camerasPerCapita": "Cameras per 1000",
+        "companies": "Companies"
+      },
+      "viewDetails": "View Detailed Report"
+    }
   }
 }
