@@ -38,7 +38,7 @@ export function middleware(request: NextRequest) {
   );
 
   // Define protected paths, including dynamic segments
-  const protectedPaths = ["/admin", "/map"];
+  const protectedPaths = ["/admin", "/analytics"];
   const isProtectedRoute = protectedPaths.some((protectedPath) =>
     pathname.includes(protectedPath)
   );
@@ -46,7 +46,7 @@ export function middleware(request: NextRequest) {
   // Handle root redirect (adjusted for i18n)
   if (pathname === "/") {
     const locale = getLocale(request);
-    return NextResponse.redirect(new URL(`/${locale}/map`, request.url));
+    return NextResponse.redirect(new URL(`/${locale}/analytics`, request.url));
   }
 
   // Handle locale redirection first if needed

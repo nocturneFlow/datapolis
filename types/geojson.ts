@@ -1,61 +1,46 @@
-import {
-  FeatureCollection,
-  Feature as GeoJsonFeature,
-  Point,
-  MultiPoint,
-  LineString,
-  MultiLineString,
-  Polygon,
-  MultiPolygon,
-  GeometryCollection,
-} from "geojson";
+// types.ts
+import type { Feature, FeatureCollection, MultiPolygon } from "geojson";
 
-export interface Properties2 {
-  name?: string;
-  nameRu?: string;
+/** Все свойства “сетки” после обогащения метриками */
+export interface EnrichedGridProperties {
+  name: string;
+  nameRu: string;
   area_m2: number;
   grid_id: number;
   area_km2: number;
-  population?: number;
+  population: number;
   crimes_count: number;
   cameras_count: number;
   company_count: number;
-  crimes_per_camera?: number;
-  crimes_per_company?: number;
-  people_per_company?: number;
-  cameras_per_company?: number;
+  crimes_per_camera: number | null;
+  crimes_per_company: number | null;
+  people_per_company: number | null;
+  cameras_per_company: number | null;
   camera_density_per_km2: number;
   crimes_density_per_km2: number;
-  crimes_per_1000_people?: number;
-  density_people_per_km2?: number;
-  cameras_per_1000_people?: number;
+  crimes_per_1000_people: number;
+  density_people_per_km2: number;
+  cameras_per_1000_people: number;
   company_density_per_km2: number;
-  companies_per_1000_people?: number;
-  // Properties added for risk index calculation and filtering
-  riskIndex?: number;
-  isHighRisk?: boolean;
+  companies_per_1000_people: number;
 }
 
-export interface Crs {
-  type: string; // обычно "name" или "EPSG"
-  properties: {
-    name: string; // например "EPSG:4326"
-  };
-}
+/** GeoJSON-фича с MultiPolygon и нашим набором свойств */
+export type EnrichedGridFeature = Feature<MultiPolygon, EnrichedGridProperties>;
 
-export type MyGeometry =
-  | Point // { type: "Point"; coordinates: [number, number] }
-  | MultiPoint // { type: "MultiPoint"; coordinates: [ [number, number], ... ] }
-  | LineString // { type: "LineString"; coordinates: [ [number, number], ... ] }
-  | MultiLineString // { type: "MultiLineString"; coordinates: [ [ [number, number], ... ], ... ] }
-  | Polygon // { type: "Polygon"; coordinates: [ [ [number, number], ... ], ... ] }
-  | MultiPolygon // { type: "MultiPolygon"; coordinates: [ [ [ [number, number], ... ], ... ], ... ] }
-  | GeometryCollection; // если вам нужен GeometryCollection
+/** Коллекция таких фич */
+export type EnrichedGridFeatureCollection = FeatureCollection<
+  MultiPolygon,
+  EnrichedGridProperties
+>;
 
-export type Feature = GeoJsonFeature<MyGeometry, Properties2>;
-
-export interface Root extends FeatureCollection<MyGeometry, Properties2> {
-  type: "FeatureCollection"; // уточняем литерал
-  name: string; // ваше поле в дополнение к стандартным
-  crs: Crs; // добавляем CRS
+/** “Сырой” объект из нового эндпойнта */
+export interface RawEnrichedGridItem {
+  id: number;
+  type: string;
+  properties: EnrichedGridProperties & { geometry?: null };
+  geometry: MultiPolygon;
+  collection_id: number;
+  created_at: string;
+  updated_at: string;
 }

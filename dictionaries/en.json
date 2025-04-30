@@ -141,5 +141,122 @@
       },
       "viewDetails": "View Detailed Report"
     }
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "description": "Manage collections, features, and users",
+    "tabs": {
+      "collections": "Collections",
+      "features": "Features",
+      "users": "Users"
+    },
+    "collections": {
+      "title": "GeoJSON Collections",
+      "uploadButton": "Upload GeoJSON",
+      "noData": "No collections found",
+      "uploadNote": "Upload a GeoJSON file to create a new collection.",
+      "table": {
+        "id": "ID",
+        "name": "Name",
+        "description": "Description",
+        "createdAt": "Created At",
+        "actions": "Actions"
+      },
+      "viewFeatures": "View Features"
+    },
+    "features": {
+      "title": "Features for Collection #{id}",
+      "noCollectionTitle": "Select a collection to view features",
+      "addButton": "Add Feature",
+      "noData": "No features found",
+      "noDataNote": "This collection doesn't have any features. Add a new feature or upload a GeoJSON file.",
+      "table": {
+        "id": "ID",
+        "name": "Name",
+        "gridId": "Grid ID",
+        "area": "Area (km²)",
+        "population": "Population",
+        "actions": "Actions"
+      },
+      "edit": "Edit"
+    },
+    "users": {
+      "title": "User Management",
+      "addButton": "Register User",
+      "noData": "No users found",
+      "noDataNote": "Register a new user to get started.",
+      "table": {
+        "id": "ID",
+        "username": "Username",
+        "role": "Role"
+      }
+    },
+    "upload": {
+      "title": "Upload GeoJSON",
+      "description": "Upload a GeoJSON file to create a new collection.",
+      "form": {
+        "name": "Collection Name",
+        "description": "Description",
+        "file": "GeoJSON File"
+      },
+      "cancel": "Cancel",
+      "submit": "Upload",
+      "success": "File uploaded successfully!"
+    },
+    "register": {
+      "title": "Register User",
+      "description": "Add a new user to the system.",
+      "form": {
+        "username": "Username",
+        "email": "Email",
+        "password": "Password",
+        "role": "Role",
+        "selectRole": "Select role",
+        "userRole": "User",
+        "adminRole": "Admin"
+      },
+      "cancel": "Cancel",
+      "submit": "Register",
+      "success": "User registered successfully!"
+    },
+    "feature": {
+      "add": {
+        "title": "Add New Feature",
+        "description": "Create a new feature for collection #{id}."
+      },
+      "edit": {
+        "title": "Edit Feature",
+        "description": "Update feature #{id}"
+      },
+      "form": {
+        "name": "Name",
+        "nameRu": "Name (Russian)",
+        "gridId": "Grid ID",
+        "areaKm2": "Area (km²)",
+        "population": "Population",
+        "crimesCount": "Crimes Count",
+        "camerasCount": "Cameras Count",
+        "companyCount": "Company Count",
+        "geometry": "GeoJSON Geometry (MultiPolygon)"
+      },
+      "cancel": "Cancel",
+      "submit": {
+        "add": "Add Feature",
+        "update": "Update Feature"
+      },
+      "success": {
+        "add": "Feature added successfully!",
+        "update": "Feature updated successfully!"
+      }
+    },
+    "errors": {
+      "collections": "Failed to load collections",
+      "features": "Failed to load features",
+      "users": "Failed to load users",
+      "upload": "Failed to upload file. Please try again.",
+      "register": "Failed to register user. Please try again.",
+      "addFeature": "Failed to add feature. Please try again.",
+      "updateFeature": "Failed to update feature. Please try again."
+    }
   }
 }

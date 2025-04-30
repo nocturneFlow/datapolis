@@ -1,4 +1,4 @@
-// app/api/geo-data/route.ts
+// app/api/admin/collections/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { api } from "@/lib/axios";
 import { AxiosError } from "axios";
@@ -13,40 +13,20 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const resp = await api.get("/geojson/collections/3/export", {
+    const resp = await api.get("/geojson/collections", {
       headers: {
         Authorization: authHeader,
-        "Accept-Encoding": "gzip",
       },
     });
 
-    // Чистим и приводим к стандарту RFC 7946
-    const raw = resp.data as any;
-    const features = (raw.features || []).map((f: any, idx: number) => {
-      const { geometry: badGeom, ...props } = f.properties || {};
-      return {
-        type: "Feature",
-        id: f.id ?? `feature-${idx}`,
-        properties: props,
-        geometry: f.geometry,
-      };
-    });
-
-    const geojson = {
-      type: "FeatureCollection",
-      features,
-    };
-
-    return new NextResponse(JSON.stringify(geojson), {
+    return NextResponse.json(resp.data, {
       status: 200,
       headers: {
-        "Content-Type": "application/geo+json; charset=utf-8",
-        "Cache-Control": "max-age=3600, must-revalidate",
-        ETag: `"${Math.random().toString(36).slice(2, 10)}"`,
+        "Cache-Control": "max-age=300, must-revalidate",
       },
     });
   } catch (err: unknown) {
-    console.error("Ошибка GeoJSON-прокси:", err);
+    console.error("Ошибка получения списка коллекций:", err);
     if (err instanceof AxiosError && err.response) {
       return NextResponse.json(
         { error: err.response.data.message || "Ошибка загрузки данных" },
