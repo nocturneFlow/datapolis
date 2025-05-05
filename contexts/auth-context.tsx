@@ -6,6 +6,7 @@ import {
   useState,
   useEffect,
   useCallback,
+  useRef,
   ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
@@ -24,6 +25,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [accessToken, setAccessTokenState] = useState<string | null>(null);
+  const previousToken = useRef<string | null>(null);
   const [expiresAt, setExpiresAt] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -65,7 +67,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const data = await response.json();
 
       if (response.ok) {
-        setAccessToken(data.access_token, data.expires_in);
+        const newToken = data.access_token;
+
+        if (newToken !== previousToken.current) {
+          previousToken.current = newToken;
+          setAccessToken(newToken, data.expires_in);
+        }
       } else {
         console.error("Failed to refresh token:", data.message);
         setAccessToken(null);

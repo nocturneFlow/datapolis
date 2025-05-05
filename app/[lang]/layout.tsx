@@ -7,6 +7,7 @@ import { i18n, type Locale } from "@/i18n-config";
 import "@/app/globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { MapProvider } from "@/contexts/map-context";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -35,11 +36,11 @@ export default async function RootLayout(props: {
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <MapProvider>{children}</MapProvider>
           <Toaster />
         </ThemeProvider>
       </body>
